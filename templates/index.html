@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Распознаватель</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="/static/js/fileinput.min.js" type="text/javascript"></script>
+        <script src="/static/js/fileinput_locale_ru.js" type="text/javascript"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+        <div class="container col-xs-4">
+            <div class="page-header">
+            <h3>Распознаватель котов</h3>
+            </div>
+            <input id="imginput" name="imgfile" type="file" class="file">
+            <script>
+            $("#imginput").fileinput({
+                language: "ru",
+                uploadUrl: document.URL, // server upload action
+                uploadAsync: false,
+                maxFileCount: 1,
+                showCaption: false,
+                showUploadedThumbs: false,
+                dropZoneEnabled: false
+            }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
+                var res = data.response.imageKeywords;
+                var s = "";
+                res.forEach(function(item){
+                    s += item.text+" : "+item.score+"<br>";
+                });
+
+                $("#opt").html(s);
+            });
+            </script>
+
+            <hr>
+                <h3 id="opt"></h3>
+            </div>
+
+
+
+</body>
+</html>
